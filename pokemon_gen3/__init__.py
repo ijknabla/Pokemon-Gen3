@@ -2,7 +2,7 @@ __all__ = "Nature", "Pokemon", "Stat", "calcurate_stat"
 
 from . import database
 from ._stat import Stat, calcurate_stat
-from ._types import Enhancement
+from ._types import Enhancement, Name
 from .database._types import NatureID, PokemonID
 
 from typing import (
@@ -32,6 +32,10 @@ class Nature(metaclass=_NatureMeta):
 
     def __hash__(self) -> int:
         return hash(self.__id)
+
+    @property
+    def name(self) -> Name:
+        return database.nature.name(self.__id)
 
     @property
     def name_jp(self) -> str:
