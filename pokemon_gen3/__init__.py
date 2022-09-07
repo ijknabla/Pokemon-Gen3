@@ -1,5 +1,6 @@
 __all__ = "Nature", "Pokemon", "Stat", "calcurate_stat"
 
+from functools import lru_cache
 from typing import (
     Any,
     DefaultDict,
@@ -40,15 +41,11 @@ class Nature(metaclass=_NatureMeta):
         return cls.__from_id__(database.nature.resolve_name(name))
 
     @classmethod
+    @lru_cache(None)
     def __from_id__(cls, id: NatureID) -> "Nature":
         self = super().__new__(cls)
         self.__id = id
         return self
-
-    def __eq__(self, other: Any) -> bool:
-        if isinstance(other, Nature):
-            return self.__id == other.__id
-        return False
 
     def __hash__(self) -> int:
         return hash(self.__id)
