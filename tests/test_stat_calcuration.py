@@ -22,7 +22,7 @@ def test_each(
     value: Tuple[int, int, int, int, int, int],
 ) -> None:
     pokemon = Pokemon.from_name_jp(pokemon_name_jp)
-    nature = Nature.from_name_jp(nature_name_jp)
+    nature = Nature.from_name(nature_name_jp)
     for stat in Stat:
         assert value[stat] == calcurate_stat(
             stat=stat,
@@ -42,7 +42,7 @@ def test_numpy() -> None:
         dtype=uint16,
     )
     enhancement = array(
-        [Nature.from_name_jp(name).enhancement for name in nature_name_jp],
+        [Nature.from_name(name).enhancement for name in nature_name_jp],
         dtype=uint16,
     )
     total = calcurate_stat(

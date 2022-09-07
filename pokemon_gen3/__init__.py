@@ -54,7 +54,7 @@ class Nature(metaclass=_NatureMeta):
         return tuple(enhancement_map[stat] for stat in Stat)
 
     @classmethod
-    def from_name_jp(
+    def from_name(
         cls,
         name: str,
     ) -> "Nature":
