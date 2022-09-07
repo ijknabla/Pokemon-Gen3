@@ -1,17 +1,5 @@
-__all__ = (
-    "Enhancement",
-    "NatureID",
-    "PokemonID",
-    "StatID",
-)
+__all__ = ("Enhancement",)
 
-from typing import (
-    Literal,
-    NewType,
-)
+from typing import Literal
 
 Enhancement = Literal[-1, 0, 1]
-
-NatureID = NewType("NatureID", int)
-PokemonID = NewType("PokemonID", int)
-StatID = NewType("StatID", int)

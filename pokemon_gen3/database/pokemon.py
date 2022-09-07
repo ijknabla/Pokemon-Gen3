@@ -1,7 +1,7 @@
 from typing import Iterator, Tuple, cast
 
 from ._connection import get_connection
-from .._types import PokemonID
+from ._types import PokemonID
 
 
 def ids() -> Iterator[PokemonID]:

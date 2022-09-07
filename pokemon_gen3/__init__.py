@@ -2,11 +2,8 @@ __all__ = "Nature", "Pokemon", "Stat", "calcurate_stat"
 
 from . import database
 from ._stat import Stat, calcurate_stat
-from ._types import (
-    Enhancement,
-    NatureID,
-    PokemonID,
-)
+from ._types import Enhancement
+from .database._types import NatureID, PokemonID
 
 from typing import (
     Any,
