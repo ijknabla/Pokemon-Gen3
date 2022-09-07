@@ -1,7 +1,7 @@
 from typing import Iterator, cast
 
 from ._connection import get_connection
-from ._types import NatureID
+from ._types import Name, NatureID
 
 
 def ids() -> Iterator[NatureID]:
@@ -13,6 +13,19 @@ SELECT id FROM natures ORDER BY id
     )
     for (id_,) in cursor.fetchall():
         yield id_
+
+
+def name(id: NatureID) -> Name:
+    cursor = get_connection().cursor()
+    cursor.execute(
+        """
+SELECT language_id, name
+FROM nature_names
+WHERE nature_id=?
+        """,
+        (id,),
+    )
+    return Name(**dict(cursor.fetchall()))
 
 
 def id_by_name_jp(
