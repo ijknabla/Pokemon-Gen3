@@ -8,11 +8,13 @@ def ids() -> Iterator[NatureID]:
     cursor = get_connection().cursor()
     cursor.execute(
         """
-SELECT id FROM natures ORDER BY id
+SELECT DISTINCT nature_id
+FROM nature_names
+ORDER BY nature_id
         """
     )
-    for (id_,) in cursor.fetchall():
-        yield id_
+    for (id,) in cursor.fetchall():
+        yield id
 
 
 def get_name(id: NatureID) -> Name:
