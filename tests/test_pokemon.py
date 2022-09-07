@@ -1,6 +1,7 @@
 from pokemon_gen3 import Pokemon, Stat
+from bootstrap.database.pokemon_bases import bases
 import pytest
-from typing import Iterator
+from typing import Iterator, Optional
 
 
 @pytest.fixture
@@ -15,3 +16,13 @@ def test_mew_base(mew: Pokemon) -> None:
 
 def test_mew_name(mew: Pokemon) -> None:
     assert mew.name_jp == "ミュウ"
+
+
+@pytest.mark.parametrize("name, form", bases.keys())
+def test_base(
+    name: str,
+    form: Optional[str],
+) -> None:
+    if form is not None:
+        return
+    assert Pokemon.from_name_jp(name).base == bases[(name, form)]
