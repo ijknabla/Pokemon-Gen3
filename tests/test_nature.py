@@ -35,11 +35,9 @@ names_jp = [
 
 @pytest.mark.parametrize("nature", Nature)
 def test_all(nature: Nature) -> None:
-    assert Nature(nature) == nature
-    assert Nature(nature=nature) == nature
     assert Nature(nature.name.jp) == nature
-    assert Nature(name=nature.name.jp) == nature
     assert Nature(nature.name.en) == nature
+    assert Nature(name=nature.name.jp) == nature
     assert Nature(name=nature.name.en) == nature
 
 

@@ -1,10 +1,5 @@
 __all__ = "Nature", "Pokemon", "Stat", "calcurate_stat"
 
-from . import database
-from ._stat import Stat, calcurate_stat
-from ._types import Enhancement, Name
-from .database._types import NatureID, PokemonID
-
 from typing import (
     Any,
     DefaultDict,
@@ -13,8 +8,13 @@ from typing import (
     Tuple,
     Type,
     TypeVar,
-    overload,
 )
+
+from . import database
+from ._stat import Stat, calcurate_stat
+from ._types import Enhancement, Name
+from .database._types import NatureID, PokemonID
+
 
 T_id = TypeVar("T_id", bound=int)
 
@@ -36,34 +36,8 @@ class _NatureMeta(type):
 class Nature(metaclass=_NatureMeta):
     __id: NatureID
 
-    @overload
     def __new__(cls, name: str) -> "Nature":
-        ...
-
-    @overload
-    def __new__(cls, nature: "Nature") -> "Nature":
-        ...
-
-    def __new__(cls, *args: Any, **kwargs: Any) -> "Nature":
-        if not args and kwargs.keys() == {"nature"}:
-            nature = kwargs["nature"]
-            if not isinstance(nature, cls):
-                raise TypeError(
-                    f"`nature` must be {cls.__name__}, got {nature}"
-                )
-            return nature
-        if len(args) == 1 and isinstance(args[0], cls) and not kwargs:
-            return args[0]
-
-        if not args and kwargs.keys() == {"name"}:
-            name = kwargs["name"]
-            if not isinstance(name, str):
-                raise TypeError(f"`name` must be str, got {name}")
-            return cls.__from_id__(database.nature.resolve_name(name))
-        if len(args) == 1 and isinstance(args[0], str) and not kwargs:
-            return cls.__from_id__(database.nature.resolve_name(args[0]))
-
-        raise ValueError(f"Invalid arguments (*{args}, **{kwargs})")
+        return cls.__from_id__(database.nature.resolve_name(name))
 
     @classmethod
     def __from_id__(cls, id: NatureID) -> "Nature":
