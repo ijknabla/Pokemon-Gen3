@@ -11,6 +11,7 @@ from typing import (
     Iterator,
     Protocol,
     Tuple,
+    Type,
     TypeVar,
 )
 
@@ -24,13 +25,21 @@ class SupportsFromID(Protocol[T_id]):
 
 
 class _NatureMeta(type):
-    def __iter__(cls) -> Iterator["Nature"]:
-        for id_ in database.nature.ids():
-            yield cls(id_)
+    def __iter__(
+        cls: Type[SupportsFromID[NatureID]],
+    ) -> Iterator[SupportsFromID[NatureID]]:
+        for id in database.nature.ids():
+            yield cls.__from_id__(id)
 
 
 class Nature(metaclass=_NatureMeta):
     __id: NatureID
+
+    @classmethod
+    def __from_id__(cls, id: NatureID) -> "Nature":
+        self = super().__new__(cls)
+        self.__id = id
+        return self
 
     def __init__(self, id_: NatureID):
         self.__id = id_
