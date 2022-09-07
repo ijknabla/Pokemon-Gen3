@@ -39,7 +39,7 @@ class Nature(metaclass=_NatureMeta):
 
     @property
     def name_jp(self) -> str:
-        return database.nature.name_jp_by_id(self.__id)
+        return database.nature.name(self.__id).jp
 
     @property
     def enhancement(self) -> Tuple[Enhancement, ...]:
@@ -58,7 +58,7 @@ class Nature(metaclass=_NatureMeta):
         cls,
         name: str,
     ) -> "Nature":
-        return cls(database.nature.id_by_name_jp(name))
+        return cls(database.nature.resolve_name(name))
 
 
 class _PokemonMeta(type):

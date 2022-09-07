@@ -1,4 +1,4 @@
-from typing import Iterator, cast
+from typing import Iterator, Optional, Tuple
 
 from ._connection import get_connection
 from ._types import Name, NatureID
@@ -28,29 +28,19 @@ WHERE nature_id=?
     return Name(**dict(cursor.fetchall()))
 
 
-def id_by_name_jp(
-    name: str,
-) -> NatureID:
+def resolve_name(name: str) -> NatureID:
     cursor = get_connection().cursor()
     cursor.execute(
         """
-SELECT id FROM natures WHERE name_jp=:name
+SELECT nature_id
+FROM nature_names
+WHERE name=?
         """,
-        {"name": name},
+        (name,),
     )
-    (value,) = cursor.fetchone()
-    return cast(NatureID, value)
 
-
-def name_jp_by_id(
-    id_: NatureID,
-) -> str:
-    cursor = get_connection().cursor()
-    cursor.execute(
-        """
-SELECT name_jp FROM natures WHERE id=:id
-        """,
-        {"id": id_},
-    )
-    (value,) = cursor.fetchone()
-    return cast(str, value)
+    result: Optional[Tuple[NatureID]]
+    result = cursor.fetchone()
+    if result is None:
+        raise ValueError(name)
+    return result[0]
