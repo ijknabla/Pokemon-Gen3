@@ -33,10 +33,11 @@ names_jp = [
 ]
 
 
-@pytest.mark.parametrize("name_jp", names_jp)
-def test_all(name_jp: str) -> None:
-    nature = Nature.from_name(name_jp)
-    assert nature.name.jp == name_jp
+@pytest.mark.parametrize("nature", Nature)
+def test_all(nature: Nature):
+    assert nature.name.jp in names_jp
+    assert Nature.from_name(nature.name.jp) == nature
+    assert Nature.from_name(nature.name.en) == nature
 
 
 def stat_updown(nature: Nature) -> Tuple[Stat, Stat]:
