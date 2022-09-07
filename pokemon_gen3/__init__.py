@@ -95,13 +95,6 @@ class Nature(metaclass=_NatureMeta):
 
         return tuple(enhancement_map[stat] for stat in Stat)
 
-    @classmethod
-    def from_name(
-        cls,
-        name: str,
-    ) -> "Nature":
-        return cls(name=name)
-
 
 class _PokemonMeta(type):
     def __iter__(cls) -> Iterator["Pokemon"]:
