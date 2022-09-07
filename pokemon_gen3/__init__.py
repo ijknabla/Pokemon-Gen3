@@ -9,8 +9,18 @@ from typing import (
     Any,
     DefaultDict,
     Iterator,
+    Protocol,
     Tuple,
+    TypeVar,
 )
+
+T_id = TypeVar("T_id", bound=int)
+
+
+class SupportsFromID(Protocol[T_id]):
+    @classmethod
+    def __from_id__(cls, id: T_id) -> "SupportsFromID[T_id]":
+        ...
 
 
 class _NatureMeta(type):
