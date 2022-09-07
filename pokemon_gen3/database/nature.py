@@ -15,7 +15,7 @@ SELECT id FROM natures ORDER BY id
         yield id_
 
 
-def name(id: NatureID) -> Name:
+def get_name(id: NatureID) -> Name:
     cursor = get_connection().cursor()
     cursor.execute(
         """

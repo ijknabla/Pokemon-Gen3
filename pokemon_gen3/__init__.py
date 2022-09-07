@@ -35,11 +35,11 @@ class Nature(metaclass=_NatureMeta):
 
     @property
     def name(self) -> Name:
-        return database.nature.name(self.__id)
+        return database.nature.get_name(self.__id)
 
     @property
     def name_jp(self) -> str:
-        return database.nature.name(self.__id).jp
+        return database.nature.get_name(self.__id).jp
 
     @property
     def enhancement(self) -> Tuple[Enhancement, ...]:
