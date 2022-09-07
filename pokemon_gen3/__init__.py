@@ -9,14 +9,8 @@ from typing import (
     Any,
     DefaultDict,
     Iterator,
-    NamedTuple,
     Tuple,
 )
-
-
-class Name(NamedTuple):
-    jp: str
-    en: str
 
 
 class _NatureMeta(type):
