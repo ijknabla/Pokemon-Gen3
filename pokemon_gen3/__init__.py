@@ -38,10 +38,6 @@ class Nature(metaclass=_NatureMeta):
         return database.nature.get_name(self.__id)
 
     @property
-    def name_jp(self) -> str:
-        return database.nature.get_name(self.__id).jp
-
-    @property
     def enhancement(self) -> Tuple[Enhancement, ...]:
         stats = [Stat.a, Stat.b, Stat.s, Stat.c, Stat.d]
         div, mod = divmod(self.__id, len(stats))

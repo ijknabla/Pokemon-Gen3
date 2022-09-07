@@ -36,12 +36,12 @@ names_jp = [
 @pytest.mark.parametrize("name_jp", names_jp)
 def test_all(name_jp: str) -> None:
     nature = Nature.from_name(name_jp)
-    assert nature.name_jp == nature.name.jp == name_jp
+    assert nature.name.jp == name_jp
 
 
 def stat_updown(nature: Nature) -> Tuple[Stat, Stat]:
     stats = [Stat.a, Stat.b, Stat.s, Stat.c, Stat.d]
-    div, mod = divmod(names_jp.index(nature.name_jp), 5)
+    div, mod = divmod(names_jp.index(nature.name.jp), 5)
     return stats[div], stats[mod]
 
 
