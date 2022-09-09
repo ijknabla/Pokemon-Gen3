@@ -7,25 +7,7 @@ from typing import Iterable, Iterator, Tuple, TypeVar
 T = TypeVar("T")
 
 
-def put_sep(iterable: Iterable[T]) -> Iterator[Tuple[T, str]]:
-    sequence = tuple(iterable)
-    for value in sequence[:-1]:
-        yield value, ","
-    yield sequence[-1], ";"
-
-
-def values() -> Iterator[Tuple[int, str, str]]:
-    names_en = dict(get_pokemon_name_en())
-    names_jp = dict(get_pokemon_name_jp())
-    keys = sorted(names_en.keys() | names_jp.keys())
-    for key in keys:
-        yield key, "en", names_en[key]
-    for key in keys:
-        yield key, "jp", names_jp[key]
-
-
 def main() -> None:
-
     print(
         """\
 CREATE TABLE pokemon_names
@@ -44,6 +26,23 @@ VALUES"""
     for (i, language, name), sep in put_sep(values()):
         name_repr = repr(name) + " " * (12 - get_width(repr(name)))
         print(f"    ({i:>10}, {language!r:<11}, {name_repr}){sep}")
+
+
+def put_sep(iterable: Iterable[T]) -> Iterator[Tuple[T, str]]:
+    sequence = tuple(iterable)
+    for value in sequence[:-1]:
+        yield value, ","
+    yield sequence[-1], ";"
+
+
+def values() -> Iterator[Tuple[int, str, str]]:
+    names_en = dict(get_pokemon_name_en())
+    names_jp = dict(get_pokemon_name_jp())
+    keys = sorted(names_en.keys() | names_jp.keys())
+    for key in keys:
+        yield key, "en", names_en[key]
+    for key in keys:
+        yield key, "jp", names_jp[key]
 
 
 def get_width(s: str) -> int:
