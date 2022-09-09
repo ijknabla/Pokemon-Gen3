@@ -1,20 +1,48 @@
 import lxml.html
 import re
 import requests
-from typing import Iterator, Tuple
+from typing import Iterable, Iterator, Tuple, TypeVar
+
+
+T = TypeVar("T")
+
+
+def put_sep(iterable: Iterable[T]) -> Iterator[Tuple[T, str]]:
+    sequence = tuple(iterable)
+    for value in sequence[:-1]:
+        yield value, ","
+    yield sequence[-1], ";"
+
+
+def values() -> Iterator[Tuple[int, str, str]]:
+    names_en = dict(get_pokemon_name_en())
+    names_jp = dict(get_pokemon_name_jp())
+    keys = sorted(names_en.keys() | names_jp.keys())
+    for key in keys:
+        yield key, "en", names_en[key]
+    for key in keys:
+        yield key, "jp", names_jp[key]
 
 
 def main() -> None:
-    names_en = dict(get_pokemon_name_en())
-    names_jp = dict(get_pokemon_name_jp())
 
-    keys = sorted(names_en.keys() | names_jp.keys())
-    for key in keys:
-        name_en = names_en[key]
-        print(key, "en", name_en)
-    for key in keys:
-        name_jp = names_jp[key]
-        print(key, "jp", name_jp)
+    print(
+        """\
+CREATE TABLE pokemon_names
+(
+    pokemon_id INTEGER,
+    language_id TEXT CHECK(language_id IN ('en', 'jp')),
+    name TEXT UNIQUE NOT NULL,
+    PRIMARY KEY(pokemon_id, language_id)
+);
+
+INSERT INTO pokemon_names
+    (pokemon_id, language_id, name        )
+VALUES"""
+    )
+
+    for (i, language, name), sep in put_sep(values()):
+        print(f"({i}, {language!r}, {name!r}){sep}")
 
 
 def get_pokemon_name_en() -> Iterator[Tuple[int, str]]:
@@ -45,10 +73,6 @@ def get_pokemon_name_jp() -> Iterator[Tuple[int, str]]:
             except (AttributeError, ValueError):
                 continue
             yield i, tr[1][0].text.strip()
-
-        for tr in element.xpath("//table"):
-            print(tr.attrib["class"])
-        yield from []
 
 
 if __name__ == "__main__":
