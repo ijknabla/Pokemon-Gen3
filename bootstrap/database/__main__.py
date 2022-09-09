@@ -1,12 +1,14 @@
 import lxml.html
+import json
 import re
 import requests
+import sys
 from typing import Iterator, Tuple
 
 
+
 def main() -> None:
-    for i, s in get_pokemon_name_en():
-        print(i, s)
+    json.dump(list(get_pokemon_name_en()), sys.stdout)
 
 
 def get_pokemon_name_en() -> Iterator[Tuple[int, str]]:
