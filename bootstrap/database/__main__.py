@@ -42,7 +42,20 @@ VALUES"""
     )
 
     for (i, language, name), sep in put_sep(values()):
-        print(f"({i}, {language!r}, {name!r}){sep}")
+        name_repr = repr(name) + " " * (12 - get_width(repr(name)))
+        print(f"    ({i:>10}, {language!r:<11}, {name_repr}){sep}")
+
+
+def get_width(s: str) -> int:
+    if len(s) == 0:
+        return 0
+    elif len(s) == 1:
+        if re.match(r"['\"a-zA-Z]", s):
+            return 1
+        else:
+            return 2
+    else:
+        return sum(map(get_width, s))
 
 
 def get_pokemon_name_en() -> Iterator[Tuple[int, str]]:
