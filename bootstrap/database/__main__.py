@@ -1,13 +1,18 @@
 import lxml.html
 import re
 import requests
-from typing import Iterable, Iterator, Tuple, TypeVar
+import sys
+from typing import Iterable, Iterator, TextIO, Tuple, TypeVar
 
 
 T = TypeVar("T")
 
 
-def main() -> None:
+def main():
+    output_pokemon_names(sys.stdout)
+
+
+def output_pokemon_names(file: TextIO) -> None:
     print(
         """\
 CREATE TABLE pokemon_names
@@ -20,12 +25,13 @@ CREATE TABLE pokemon_names
 
 INSERT INTO pokemon_names
     (pokemon_id, language_id, name        )
-VALUES"""
+VALUES""",
+        file=file,
     )
 
     for (i, language, name), sep in put_sep(values()):
         name_repr = repr(name) + " " * (12 - get_width(repr(name)))
-        print(f"    ({i:>10}, {language!r:<11}, {name_repr}){sep}")
+        print(f"    ({i:>10}, {language!r:<11}, {name_repr}){sep}", file=file)
 
 
 def put_sep(iterable: Iterable[T]) -> Iterator[Tuple[T, str]]:
