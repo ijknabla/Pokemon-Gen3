@@ -4,12 +4,71 @@ import requests
 import sys
 from typing import Iterable, Iterator, TextIO, Tuple, TypeVar
 
+from .pokemon_bases import bases
+from pokemon_gen3 import Stat
+from pokemon_gen3.database._connection import get_connection
+
 
 T = TypeVar("T")
 
 
 def main():
-    output_pokemon_names(sys.stdout)
+    output_pokemon_bases(sys.stdout)
+
+
+def output_pokemon_bases(file: TextIO):
+    print(
+        """\
+CREATE TABLE pokemon_bases
+(
+    pokemon_id INTEGER,
+    form_id INTEGER,
+    stat_id INTEGER,
+    base INTEGER,
+    PRIMARY KEY(pokemon_id, form_id, stat_id)
+);
+
+INSERT INTO pokemon_bases
+    (pokemon_id, form_id, stat_id, base)
+VALUES"""
+    )
+
+    for (pokemon_id, form_id, stat_id, base), sep in put_sep(
+        iterate_pokemon_bases()
+    ):
+        print(
+            f"    ({pokemon_id:>10}, {form_id:>7}, {stat_id:>7}, {base:>4}){sep}",
+            file=file,
+        )
+
+
+def iterate_pokemon_bases() -> Iterator[Tuple[int, int, int, int]]:
+    cursor = get_connection().cursor()
+
+    cursor.execute(
+        """
+SELECT name, form_id
+FROM form_names
+WHERE language_id='jp'
+        """
+    )
+    form_names = dict(cursor.fetchall())
+    form_names[None] = 0
+
+    cursor.execute(
+        """
+SELECT name, pokemon_id
+FROM pokemon_names
+WHERE language_id='jp'
+        """
+    )
+    pokemon_names = dict(cursor.fetchall())
+
+    for (pokemon, form), base in bases.items():
+        pokemon_id = pokemon_names[pokemon]
+        form_id = form_names[form]
+        for stat in Stat:
+            yield pokemon_id, form_id, stat.value, base[stat]
 
 
 def output_pokemon_names(file: TextIO) -> None:
