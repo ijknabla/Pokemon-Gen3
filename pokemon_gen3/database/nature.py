@@ -1,43 +1,48 @@
-from typing import Iterator, cast
+from typing import Iterator, Optional, Tuple
 
 from ._connection import get_connection
-from .._types import NatureID
+from ._types import Name, NatureID
 
 
 def ids() -> Iterator[NatureID]:
     cursor = get_connection().cursor()
     cursor.execute(
         """
-SELECT id FROM natures ORDER BY id
+SELECT DISTINCT nature_id
+FROM nature_names
+ORDER BY nature_id
         """
     )
-    for (id_,) in cursor.fetchall():
-        yield id_
+    for (id,) in cursor.fetchall():
+        yield id
 
 
-def id_by_name_jp(
-    name: str,
-) -> NatureID:
+def get_name(id: NatureID) -> Name:
     cursor = get_connection().cursor()
     cursor.execute(
         """
-SELECT id FROM natures WHERE name_jp=:name
+SELECT language_id, name
+FROM nature_names
+WHERE nature_id=?
         """,
-        {"name": name},
+        (id,),
     )
-    (value,) = cursor.fetchone()
-    return cast(NatureID, value)
+    return Name(**dict(cursor.fetchall()))
 
 
-def name_jp_by_id(
-    id_: NatureID,
-) -> str:
+def resolve_name(name: str) -> NatureID:
     cursor = get_connection().cursor()
     cursor.execute(
         """
-SELECT name_jp FROM natures WHERE id=:id
+SELECT nature_id
+FROM nature_names
+WHERE name=?
         """,
-        {"id": id_},
+        (name,),
     )
-    (value,) = cursor.fetchone()
-    return cast(str, value)
+
+    result: Optional[Tuple[NatureID]]
+    result = cursor.fetchone()
+    if result is None:
+        raise ValueError(name)
+    return result[0]

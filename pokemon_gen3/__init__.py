@@ -1,44 +1,58 @@
 __all__ = "Nature", "Pokemon", "Stat", "calcurate_stat"
 
-from . import database
-from ._stat import Stat, calcurate_stat
-from ._types import (
-    Enhancement,
-    NatureID,
-    PokemonID,
-)
-
+from functools import lru_cache
 from typing import (
     Any,
     DefaultDict,
     Iterator,
+    Protocol,
     Tuple,
+    Type,
+    TypeVar,
 )
+
+from . import database
+from ._stat import Stat, calcurate_stat
+from ._types import Enhancement, Name
+from .database._types import NatureID, PokemonID
+
+
+T_id = TypeVar("T_id", bound=int)
+
+
+class SupportsFromID(Protocol[T_id]):
+    @classmethod
+    def __from_id__(cls, id: T_id) -> "SupportsFromID[T_id]":
+        ...
 
 
 class _NatureMeta(type):
-    def __iter__(cls) -> Iterator["Nature"]:
-        for id_ in database.nature.ids():
-            yield cls(id_)
+    def __iter__(
+        cls: Type[SupportsFromID[NatureID]],
+    ) -> Iterator[SupportsFromID[NatureID]]:
+        for id in database.nature.ids():
+            yield cls.__from_id__(id)
 
 
 class Nature(metaclass=_NatureMeta):
     __id: NatureID
 
-    def __init__(self, id_: NatureID):
-        self.__id = id_
+    def __new__(cls, name: str) -> "Nature":
+        return cls.__from_id__(database.nature.resolve_name(name))
 
-    def __eq__(self, other: Any) -> bool:
-        if isinstance(other, Nature):
-            return self.__id == other.__id
-        return False
+    @classmethod
+    @lru_cache(None)
+    def __from_id__(cls, id: NatureID) -> "Nature":
+        self = super().__new__(cls)
+        self.__id = id
+        return self
 
     def __hash__(self) -> int:
         return hash(self.__id)
 
     @property
-    def name_jp(self) -> str:
-        return database.nature.name_jp_by_id(self.__id)
+    def name(self) -> Name:
+        return database.nature.get_name(self.__id)
 
     @property
     def enhancement(self) -> Tuple[Enhancement, ...]:
@@ -51,13 +65,6 @@ class Nature(metaclass=_NatureMeta):
         enhancement_map[decrease] -= 1  # type: ignore
 
         return tuple(enhancement_map[stat] for stat in Stat)
-
-    @classmethod
-    def from_name_jp(
-        cls,
-        name: str,
-    ) -> "Nature":
-        return cls(database.nature.id_by_name_jp(name))
 
 
 class _PokemonMeta(type):

@@ -2,10 +2,8 @@ import enum
 from typing import Any, TYPE_CHECKING, TypeVar, overload
 
 
-from ._types import (
-    Enhancement,
-    StatID,
-)
+from ._types import Enhancement
+from .database._types import StatID
 from . import database
 
 if TYPE_CHECKING:
