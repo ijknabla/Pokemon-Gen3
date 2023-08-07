@@ -1,14 +1,17 @@
-from typing import (
-    NewType,
-    Sequence,
-    Tuple,
+__all__ = (
+    "Enhancement",
+    "NatureID",
+    "PokemonID",
+    "StatID",
 )
 
+from typing import (
+    Literal,
+    NewType,
+)
 
-Stat = int
-Stats = Sequence[Stat]
-StatsTuple = Tuple[Stat, Stat, Stat, Stat, Stat, Stat]
+Enhancement = Literal[-1, 0, 1]
 
-
-StatID = NewType("StatID", int)
 NatureID = NewType("NatureID", int)
+PokemonID = NewType("PokemonID", int)
+StatID = NewType("StatID", int)

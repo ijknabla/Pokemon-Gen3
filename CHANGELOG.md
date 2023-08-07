@@ -6,6 +6,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## 0.0.0a2 - 2022/09/06
+
+### Changed
+
+- Update database as file (setup at build time)
+- Change calcurate_stat API (Enable numpy.ndarray to argument)
+
 ## 0.0.0a1 - 2022/08/31
 
 ### Changed

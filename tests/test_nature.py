@@ -45,20 +45,20 @@ def stat_updown(nature: Nature) -> Tuple[Stat, Stat]:
 
 
 @pytest.mark.parametrize("name_jp", names_jp)
-def test_corrections(name_jp: str) -> None:
+def test_enhancement(name_jp: str) -> None:
     nature = Nature.from_name_jp(name_jp)
-    corrections = nature.stat_correction
+    enhancement = nature.enhancement
     stat_up, stat_down = stat_updown(nature)
 
-    assert len(corrections) == len(Stat)
+    assert len(enhancement) == len(Stat)
 
     if stat_up == stat_down:
-        assert all(correction == 0 for correction in corrections)
+        assert all(e == 0 for e in enhancement)
     else:
-        for stat, correction in zip(Stat, corrections):
+        for stat, e in zip(Stat, enhancement):
             if stat is stat_up:
-                assert correction == +1
+                assert e == +1
             elif stat is stat_down:
-                assert correction == -1
+                assert e == -1
             else:
-                assert correction == 0
+                assert e == 0

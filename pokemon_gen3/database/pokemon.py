@@ -1,11 +1,11 @@
-from typing import Iterator, cast
+from typing import Iterator, Tuple, cast
 
-from .._types import StatsTuple
-from . import __connection
+from ._connection import get_connection
+from .._types import PokemonID
 
 
-def ids() -> Iterator[int]:
-    cursor = __connection.cursor()
+def ids() -> Iterator[PokemonID]:
+    cursor = get_connection().cursor()
     cursor.execute(
         """
 SELECT id
@@ -19,8 +19,8 @@ ORDER BY id
 
 def id_by_name_jp(
     name: str,
-) -> int:
-    cursor = __connection.cursor()
+) -> PokemonID:
+    cursor = get_connection().cursor()
     cursor.execute(
         """
 SELECT id FROM pokemons WHERE name_jp=:name_jp
@@ -30,13 +30,13 @@ SELECT id FROM pokemons WHERE name_jp=:name_jp
         },
     )
     (value,) = cursor.fetchone()
-    return cast(int, value)
+    return cast(PokemonID, value)
 
 
-def bases_by_id(
-    id_: int,
-) -> StatsTuple:
-    cursor = __connection.cursor()
+def base_by_id(
+    id_: PokemonID,
+) -> Tuple[int, ...]:
+    cursor = get_connection().cursor()
     cursor.execute(
         """
 SELECT h_base, a_base, b_base, c_base, d_base, s_base
@@ -46,13 +46,13 @@ FROM pokemons WHERE id=:id
             "id": id_,
         },
     )
-    return cast(StatsTuple, cursor.fetchone())
+    return cast(Tuple[int, ...], cursor.fetchone())
 
 
 def name_jp_by_id(
-    id_: int,
+    id_: PokemonID,
 ) -> str:
-    cursor = __connection.cursor()
+    cursor = get_connection().cursor()
     cursor.execute(
         """
 SELECT name_jp
