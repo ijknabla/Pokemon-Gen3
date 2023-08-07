@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## 0.0.0a1 - 2022/08/31
+
+### Changed
+
+- Update `pokemon_gen3.Pokemon` as iterable
+
 ## 0.0.0a0 - 2022/03/30
 
 ### Added

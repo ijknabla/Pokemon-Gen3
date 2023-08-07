@@ -18,7 +18,13 @@ from ._types import (
 )
 
 
-class Pokemon:
+class _PokemonMeta(type):
+    def __iter__(cls) -> Iterator["Pokemon"]:
+        for id_ in pokemon_database.ids():
+            yield cls(id_)
+
+
+class Pokemon(metaclass=_PokemonMeta):
     __id: int
 
     def __init__(self, id_: int):

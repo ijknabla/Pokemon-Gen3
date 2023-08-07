@@ -1,8 +1,20 @@
-from typing import cast
-
-from . import __connection
+from typing import Iterator, cast
 
 from .._types import StatsTuple
+from . import __connection
+
+
+def ids() -> Iterator[int]:
+    cursor = __connection.cursor()
+    cursor.execute(
+        """
+SELECT id
+FROM pokemons
+ORDER BY id
+        """
+    )
+    for (id_,) in cursor.fetchall():
+        yield id_
 
 
 def id_by_name_jp(
