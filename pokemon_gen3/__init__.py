@@ -1,4 +1,9 @@
-__all__ = "Nature", "Pokemon", "Stat", "calcurate_stat"
+__all__ = (
+    "Nature",
+    "Pokemon",
+    "Stat",
+    "calcurate_stat",
+)
 
 from typing import Any, DefaultDict, Iterator, Tuple
 
