@@ -46,17 +46,3 @@ WHERE nature_id=:id AND language_id=:language_name
     )
     (value,) = cursor.fetchone()
     return cast(str, value)
-
-
-def name_jp_by_id(
-    id_: NatureID,
-) -> str:
-    cursor = get_connection().cursor()
-    cursor.execute(
-        """
-SELECT name_jp FROM natures WHERE id=:id
-        """,
-        {"id": id_},
-    )
-    (value,) = cursor.fetchone()
-    return cast(str, value)
