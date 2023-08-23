@@ -1,10 +1,13 @@
-from typing import Iterator, cast
+from __future__ import annotations
+
+from collections.abc import Generator
+from typing import cast
 
 from .._types import Language, NatureID
 from ._connection import get_connection
 
 
-def ids() -> Iterator[NatureID]:
+def ids() -> Generator[NatureID, None, None]:
     cursor = get_connection().cursor()
     cursor.execute(
         """
