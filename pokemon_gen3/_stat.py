@@ -1,8 +1,10 @@
+from __future__ import annotations
+
 import enum
 from typing import TYPE_CHECKING, Any, TypeVar, overload
 
 from . import database
-from ._types import Enhancement, StatID
+from ._types import Enhancement, Language, StatID
 
 if TYPE_CHECKING:
     from numpy.typing import NBitBase, NDArray
@@ -51,13 +53,18 @@ class Stat(int, enum.Enum):
 
     value: StatID
 
-    @property
-    def name_en(self) -> str:
-        return database.stat.name_en_by_id(self.value)
+    def get_name(self, language: str | Language) -> str:
+        if isinstance(language, str):
+            language = Language[language]
+        return database.stat.name_by_id(self.value, language)
 
     @property
-    def name_jp(self) -> str:
-        return database.stat.name_jp_by_id(self.value)
+    def name_ja(self) -> str:
+        return self.get_name("ja")
+
+    @property
+    def name_en(self) -> str:
+        return self.get_name("en")
 
 
 @overload

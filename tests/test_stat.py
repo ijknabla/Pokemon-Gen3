@@ -42,4 +42,4 @@ def test_name_jp(stat: Stat) -> None:
         Stat.d: "とくぼう",
         Stat.s: "すばやさ",
     }
-    assert stat.name_jp == names[stat]
+    assert stat.name_ja == names[stat]
