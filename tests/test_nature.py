@@ -35,7 +35,7 @@ names_jp = [
 
 @pytest.mark.parametrize("name_jp", names_jp)
 def test_all(name_jp: str) -> None:
-    assert Nature.from_name_jp(name_jp).name_jp == name_jp
+    assert Nature.from_name(name_jp).name_jp == name_jp
 
 
 def stat_updown(nature: Nature) -> Tuple[Stat, Stat]:
@@ -46,7 +46,7 @@ def stat_updown(nature: Nature) -> Tuple[Stat, Stat]:
 
 @pytest.mark.parametrize("name_jp", names_jp)
 def test_enhancement(name_jp: str) -> None:
-    nature = Nature.from_name_jp(name_jp)
+    nature = Nature.from_name(name_jp)
     enhancement = nature.enhancement
     stat_up, stat_down = stat_updown(nature)
 

@@ -49,11 +49,11 @@ class Nature(metaclass=_NatureMeta):
         return tuple(enhancement_map[stat] for stat in Stat)
 
     @classmethod
-    def from_name_jp(
+    def from_name(
         cls,
         name: str,
     ) -> "Nature":
-        return cls(database.nature.id_by_name_jp(name))
+        return cls(database.nature.id_by_name(name))
 
 
 class _PokemonMeta(type):

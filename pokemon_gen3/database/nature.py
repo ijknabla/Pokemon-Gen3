@@ -33,20 +33,6 @@ WHERE name=:name
     return cast(NatureID, value)
 
 
-def id_by_name_jp(
-    name: str,
-) -> NatureID:
-    cursor = get_connection().cursor()
-    cursor.execute(
-        """
-SELECT id FROM natures WHERE name_jp=:name
-        """,
-        {"name": name},
-    )
-    (value,) = cursor.fetchone()
-    return cast(NatureID, value)
-
-
 def name_jp_by_id(
     id_: NatureID,
 ) -> str:
