@@ -1,6 +1,7 @@
+from itertools import combinations, zip_longest
+
 import pytest
 
-from itertools import combinations, zip_longest
 from pokemon_gen3 import Stat
 
 

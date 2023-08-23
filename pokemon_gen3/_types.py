@@ -5,7 +5,7 @@ __all__ = (
     "StatID",
 )
 
-from typing import NewType, TYPE_CHECKING
+from typing import TYPE_CHECKING, NewType
 
 if TYPE_CHECKING:
     from typing_extensions import Literal

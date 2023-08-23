@@ -1,8 +1,8 @@
+from typing import Tuple
+
 import pytest
 
 from pokemon_gen3 import Nature, Stat
-from typing import Tuple
-
 
 names_jp = [
     "がんばりや",

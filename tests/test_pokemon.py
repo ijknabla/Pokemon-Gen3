@@ -1,6 +1,8 @@
-from pokemon_gen3 import Pokemon, Stat
-import pytest
 from typing import Iterator
+
+import pytest
+
+from pokemon_gen3 import Pokemon, Stat
 
 
 @pytest.fixture

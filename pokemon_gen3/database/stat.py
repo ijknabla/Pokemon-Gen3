@@ -1,8 +1,8 @@
 import functools
 from typing import cast
 
-from ._connection import get_connection
 from .._types import StatID
+from ._connection import get_connection
 
 
 @functools.lru_cache()

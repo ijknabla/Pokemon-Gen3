@@ -12,13 +12,16 @@ generate-setup-file = false
 [tool.poetry.dependencies]
 python = "^3.7"
 
-[tool.poetry.dev-dependencies]
-black = "^22.1.0"
-mypy = "^0.931"
-pytest = "^7.0.1"
-pyproject-flake8 = "^0.0.1-alpha.2"
+[tool.poetry.group.dev.dependencies]
+black = "^23"
+isort = "^5"
+mypy = "^1"
+pyproject-flake8 = "^5"
 types-setuptools = "^57.4.11"
+
+[tool.poetry.group.test.dependencies]
 numpy = "^1.20"
+pytest = "^7.0.1"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
@@ -29,6 +32,10 @@ line-length = 79
 
 [tool.flake8]
 exclude = '.venv'
+
+[tool.isort]
+line_length = 79
+profile = "black"
 
 [tool.mypy]
 exclude = [

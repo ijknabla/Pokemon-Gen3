@@ -1,7 +1,7 @@
-import bootstrap.database
 import pathlib
 import typing
 
+import bootstrap.database
 
 HERE = pathlib.Path(__file__).parent.absolute()
 
