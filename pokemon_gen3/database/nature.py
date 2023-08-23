@@ -17,6 +17,22 @@ ORDER BY nature_id
         yield id_
 
 
+def id_by_name(
+    name: str
+) -> NatureID:
+    cursor = get_connection().cursor()
+    cursor.execute(
+        """
+SELECT nature_id
+FROM nature_names
+WHERE name=:name
+        """,
+        {"name": name},
+    )
+    (value,) = cursor.fetchone()
+    return cast(NatureID, value)
+
+
 def id_by_name_jp(
     name: str,
 ) -> NatureID:
