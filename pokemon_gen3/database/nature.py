@@ -17,9 +17,7 @@ ORDER BY nature_id
         yield id_
 
 
-def id_by_name(
-    name: str
-) -> NatureID:
+def id_by_name(name: str) -> NatureID:
     cursor = get_connection().cursor()
     cursor.execute(
         """
