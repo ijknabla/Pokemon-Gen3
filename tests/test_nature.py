@@ -4,7 +4,7 @@ import pytest
 
 from pokemon_gen3 import Nature, Stat
 
-names_jp = [
+names_ja = [
     "がんばりや",
     "さみしがり",
     "ゆうかん",
@@ -33,18 +33,18 @@ names_jp = [
 ]
 
 
-@pytest.mark.parametrize("name_jp", names_jp)
-def test_all(name_jp: str) -> None:
-    assert Nature.from_name(name_jp).name_jp == name_jp
+@pytest.mark.parametrize("name_ja", names_ja)
+def test_all(name_ja: str) -> None:
+    assert Nature.from_name(name_ja).name_ja == name_ja
 
 
 def stat_updown(nature: Nature) -> Tuple[Stat, Stat]:
     stats = [Stat.a, Stat.b, Stat.s, Stat.c, Stat.d]
-    div, mod = divmod(names_jp.index(nature.name_jp), 5)
+    div, mod = divmod(names_ja.index(nature.name_ja), 5)
     return stats[div], stats[mod]
 
 
-@pytest.mark.parametrize("name_jp", names_jp)
+@pytest.mark.parametrize("name_jp", names_ja)
 def test_enhancement(name_jp: str) -> None:
     nature = Nature.from_name(name_jp)
     enhancement = nature.enhancement

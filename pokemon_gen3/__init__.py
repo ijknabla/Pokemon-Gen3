@@ -40,8 +40,12 @@ class Nature(metaclass=_NatureMeta):
         return database.nature.name_by_id(self.__id, language)
 
     @property
-    def name_jp(self) -> str:
-        return database.nature.name_jp_by_id(self.__id)
+    def name_ja(self) -> str:
+        return self.get_name("ja")
+
+    @property
+    def name_en(self) -> str:
+        return self.get_name("en")
 
     @property
     def enhancement(self) -> Tuple[Enhancement, ...]:
