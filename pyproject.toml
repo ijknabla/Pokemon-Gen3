@@ -17,7 +17,7 @@ black = "^23"
 isort = "^5"
 mypy = "^1"
 numpy = "^1.20"
-pyproject-flake8 = "^0.0.1-alpha.2"
+pyproject-flake8 = "^5"
 pytest = "^7.0.1"
 types-setuptools = "^57.4.11"
 
