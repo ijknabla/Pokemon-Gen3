@@ -1,6 +1,6 @@
 from typing import Iterator, cast
 
-from .._types import NatureID
+from .._types import Language, NatureID
 from ._connection import get_connection
 
 
@@ -29,6 +29,20 @@ WHERE name=:name
     )
     (value,) = cursor.fetchone()
     return cast(NatureID, value)
+
+
+def name_by_id(id: NatureID, language: Language) -> str:
+    cursor = get_connection().cursor()
+    cursor.execute(
+        """
+SELECT name
+FROM nature_names
+WHERE nature_id=:id AND language_id=:language_name
+        """,
+        {"id": id, "language_name": language.name},
+    )
+    (value,) = cursor.fetchone()
+    return cast(str, value)
 
 
 def name_jp_by_id(
