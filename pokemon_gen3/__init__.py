@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 __all__ = (
     "Nature",
     "Pokemon",
@@ -9,7 +11,7 @@ from typing import Any, DefaultDict, Iterator, Tuple
 
 from . import database
 from ._stat import Stat, calcurate_stat
-from ._types import Enhancement, NatureID, PokemonID
+from ._types import Enhancement, Language, NatureID, PokemonID
 
 
 class _NatureMeta(type):
@@ -31,6 +33,11 @@ class Nature(metaclass=_NatureMeta):
 
     def __hash__(self) -> int:
         return hash(self.__id)
+
+    def get_name(self, language: str | Language) -> str:
+        if isinstance(language, str):
+            language = Language[language]
+        return database.nature.name_by_id(self.__id, language)
 
     @property
     def name_jp(self) -> str:
