@@ -1,8 +1,9 @@
-from numpy import array, uint16
-from pokemon_gen3 import Nature, Pokemon, Stat, calcurate_stat
-import pytest
 from typing import Tuple
 
+import pytest
+from numpy import array, uint16
+
+from pokemon_gen3 import Nature, Pokemon, Stat, calcurate_stat
 
 testcases = [
     ("ミュウ", "がんばりや", 50, (160, 105, 105, 105, 105, 105)),

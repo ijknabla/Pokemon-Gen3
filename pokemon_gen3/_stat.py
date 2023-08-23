@@ -1,15 +1,11 @@
 import enum
-from typing import Any, TYPE_CHECKING, TypeVar, overload
+from typing import TYPE_CHECKING, Any, TypeVar, overload
 
-
-from ._types import (
-    Enhancement,
-    StatID,
-)
 from . import database
+from ._types import Enhancement, StatID
 
 if TYPE_CHECKING:
-    from numpy.typing import NDArray, NBitBase
+    from numpy.typing import NBitBase, NDArray
 
     T_bit = TypeVar("T_bit", bound=NBitBase)
 

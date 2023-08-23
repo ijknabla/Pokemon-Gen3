@@ -1,6 +1,8 @@
-from functools import lru_cache
 import sqlite3
+from functools import lru_cache
+
 import pkg_resources
+
 from ..utils import atexit_context
 
 

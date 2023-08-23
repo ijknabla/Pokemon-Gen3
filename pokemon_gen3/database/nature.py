@@ -1,7 +1,7 @@
 from typing import Iterator, cast
 
-from ._connection import get_connection
 from .._types import NatureID
+from ._connection import get_connection
 
 
 def ids() -> Iterator[NatureID]:
