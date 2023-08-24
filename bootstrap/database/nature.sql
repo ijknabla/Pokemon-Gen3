@@ -1,11 +1,10 @@
 
 CREATE TABLE nature_names
 (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
     nature_id INTEGER NOT NULL,
     language_id TEXT NOT NULL,
     `name` TEXT UNIQUE NOT NULL,
-    UNIQUE(nature_id, language_id)
+    PRIMARY KEY(nature_id, language_id)
 );
 
 INSERT INTO nature_names
