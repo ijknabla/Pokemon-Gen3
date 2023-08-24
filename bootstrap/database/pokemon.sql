@@ -781,3 +781,22 @@ VALUES
     (       385, 'en'       , 'Jirachi'),
     (       386, 'ja'       , 'デオキシス'),
     (       386, 'en'       , 'Deoxys');
+
+CREATE TABLE forme_names
+(
+    forme_id INTEGER NOT NULL,
+    language_id TEXT NOT NULL,
+    `name` TEXT UNIQUE NOT NULL,
+    PRIMARY KEY(forme_id, language_id)
+);
+
+INSERT INTO forme_names
+    (forme_id, language_id, `name`)
+VALUES
+    (       1, 'ja'       , 'あまぐものすがた'),
+    (       2, 'ja'       , 'たいようのすがた'),
+    (       3, 'ja'       , 'ゆきぐものすがた'),
+    (       4, 'ja'       , 'ノーマルフォルム'),
+    (       5, 'ja'       , 'アタックフォルム'),
+    (       6, 'ja'       , 'ディフェンスフォルム'),
+    (       7, 'ja'       , 'スピードフォルム');
