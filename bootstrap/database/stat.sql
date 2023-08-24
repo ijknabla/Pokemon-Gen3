@@ -2,7 +2,7 @@
 CREATE TABLE stat_names
 (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    stat_id NOT NULL,
+    stat_id INTEGER NOT NULL,
     language_id TEXT NOT NULL,
     `name` TEXT NOT NULL,
     UNIQUE(stat_id, language_id)

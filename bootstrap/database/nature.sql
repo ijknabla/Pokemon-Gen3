@@ -2,7 +2,7 @@
 CREATE TABLE nature_names
 (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    nature_id NOT NULL,
+    nature_id INTEGER NOT NULL,
     language_id TEXT NOT NULL,
     `name` TEXT UNIQUE NOT NULL,
     UNIQUE(nature_id, language_id)
