@@ -15,7 +15,7 @@ def test_pokemon_name(id: PokemonID, language: Language):
 
 @pytest.fixture
 def mew() -> Iterator[Pokemon]:
-    yield Pokemon.from_name_jp("ミュウ")
+    yield Pokemon.from_name("ミュウ")
 
 
 def test_mew_base(mew: Pokemon) -> None:

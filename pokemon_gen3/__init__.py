@@ -105,8 +105,8 @@ class Pokemon(metaclass=_PokemonMeta):
         return database.pokemon.base_by_id(self.__id)
 
     @classmethod
-    def from_name_jp(
+    def from_name(
         cls,
         name: str,
     ) -> "Pokemon":
-        return cls(database.pokemon.id_by_name_jp(name))
+        return cls(database.pokemon.id_by_name(name))

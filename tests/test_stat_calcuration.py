@@ -22,7 +22,7 @@ def test_each(
     level: int,
     value: Tuple[int, int, int, int, int, int],
 ) -> None:
-    pokemon = Pokemon.from_name_jp(pokemon_name_jp)
+    pokemon = Pokemon.from_name(pokemon_name_jp)
     nature = Nature.from_name(nature_name_jp)
     for stat in Stat:
         assert value[stat] == calcurate_stat(
@@ -39,7 +39,7 @@ def test_numpy() -> None:
     stat = array(Stat, dtype=uint16)[None, :]
     pokemon_name_jp, nature_name_jp, level, value = zip(*testcases)
     base = array(
-        [Pokemon.from_name_jp(name).base for name in pokemon_name_jp],
+        [Pokemon.from_name(name).base for name in pokemon_name_jp],
         dtype=uint16,
     )
     enhancement = array(
