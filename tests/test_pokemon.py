@@ -24,4 +24,4 @@ def test_mew_base(mew: Pokemon) -> None:
 
 
 def test_mew_name(mew: Pokemon) -> None:
-    assert mew.name_jp == "ミュウ"
+    assert mew.name_ja == "ミュウ"

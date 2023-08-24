@@ -87,9 +87,18 @@ class Pokemon(metaclass=_PokemonMeta):
     def __hash__(self) -> int:
         return hash(self.__id)
 
+    def get_name(self, language: str | Language) -> str:
+        if isinstance(language, str):
+            language = Language[language]
+        return database.pokemon.name_by_id(self.__id, language)
+
     @property
-    def name_jp(self) -> str:
-        return database.pokemon.name_jp_by_id(self.__id)
+    def name_ja(self) -> str:
+        return self.get_name("ja")
+
+    @property
+    def name_en(self) -> str:
+        return self.get_name("en")
 
     @property
     def base(self) -> Tuple[int, ...]:
