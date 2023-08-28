@@ -793,10 +793,17 @@ CREATE TABLE forme_names
 INSERT INTO forme_names
     (forme_id, language_id, `name`)
 VALUES
-    (       1, 'ja'       , 'あまぐものすがた'),
-    (       2, 'ja'       , 'たいようのすがた'),
+    (       1, 'ja'       , 'たいようのすがた'),
+    (       1, 'en'       , 'Sunny Form'),
+    (       2, 'ja'       , 'あまみずのすがた'),
+    (       2, 'en'       , 'Rainy Form'),
     (       3, 'ja'       , 'ゆきぐものすがた'),
+    (       3, 'en'       , 'Snowy Form'),
     (       4, 'ja'       , 'ノーマルフォルム'),
+    (       4, 'en'       , 'Normal Forme'),
     (       5, 'ja'       , 'アタックフォルム'),
+    (       5, 'en'       , 'Attack Forme'),
     (       6, 'ja'       , 'ディフェンスフォルム'),
-    (       7, 'ja'       , 'スピードフォルム');
+    (       6, 'en'       , 'Defense Forme'),
+    (       7, 'ja'       , 'スピードフォルム'),
+    (       7, 'en'       , 'Speed Forme');
